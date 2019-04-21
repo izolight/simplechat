@@ -30,11 +30,11 @@ func (c *chatServer)sendToAll(me chan *pb.ChatMessage, msg *pb.ChatMessage) {
 	}
 }
 
-func newServerMessage(message string) *pb.ChatMessage {
+func newServerMessage(text string) *pb.ChatMessage {
 	msg := &pb.ChatMessage{}
 	msg.User = "Server"
 	msg.Timestamp = time.Now().Unix()
-	msg.Message = message
+	msg.Text = text
 	return msg
 }
 

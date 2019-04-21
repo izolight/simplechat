@@ -52,20 +52,20 @@ func main() {
                 continue
             }
             ts := time.Unix(in.Timestamp, 0)
-            fmt.Printf("%d:%d:%d\t%s | %s\n", ts.Hour(), ts.Minute(), ts.Second(), in.User, in.Message)
+            fmt.Printf("%d:%d:%d\t%s | %s\n", ts.Hour(), ts.Minute(), ts.Second(), in.User, in.Text)
         }
     }()
     loop:
     for {
-        var message string
-        _, err = fmt.Scanln(&message)
-        if message == "quit" {
+        var text string
+        _, err = fmt.Scanln(&text)
+        if text == "quit" {
             close(waitc)
             break loop
         }
         userMsg := &pb.ChatMessage{}
         userMsg.User = user
-        userMsg.Message = message
+        userMsg.Text = text
         if err := stream.Send(userMsg); err != nil {
             log.Fatalf("failed to send a message: %v", err)
         }
