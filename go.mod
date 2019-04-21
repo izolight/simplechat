@@ -1,4 +1,4 @@
-module simpleChat
+module github.com/izolight/simplechat
 
 go 1.12
 

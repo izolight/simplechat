@@ -9,7 +9,7 @@ import (
 	"net"
 	"time"
 
-	pb "simpleChat/chat"
+	pb "github.com/izolight/simplechat/chat"
 
 	"google.golang.org/grpc"
 )
