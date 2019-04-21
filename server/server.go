@@ -33,11 +33,17 @@ func (c *chatServer) SendMessage(stream pb.Chat_SendMessageServer) error {
 	c.clientMessages = append(c.clientMessages, messages)
 	errors := make(chan error)
 	newUser := true
+	user := ""
 	// receive all messages and send to all servers
 	go func () {
 		for {
 			in, err := stream.Recv()
 			if err == io.EOF {
+				msg := &pb.ChatMessage{}
+				msg.User = "Server"
+				msg.Timestamp = time.Now().Unix()
+				msg.Message = fmt.Sprintf("%s has left the server", user)
+				go c.sendToAll(messages, msg)
 				errors <- nil
 				break
 			}
@@ -51,6 +57,7 @@ func (c *chatServer) SendMessage(stream pb.Chat_SendMessageServer) error {
 				msg.Timestamp = time.Now().Unix()
 				msg.Message = fmt.Sprintf("%s joined the server", in.User)
 				go c.sendToAll(messages, msg)
+				user = in.User
 				newUser = false
 			}
 			in.Timestamp = time.Now().Unix()
