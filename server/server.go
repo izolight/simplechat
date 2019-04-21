@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io"
 	"log"
 	"net"
@@ -26,10 +25,8 @@ func (c *chatServer) SendMessage(stream pb.Chat_SendMessageServer) error {
 		if err != nil {
 			return err
 		}
-		now := time.Now()
-		message := &pb.ServerMessage{}
-		message.Message = fmt.Sprintf("%d:%d:%d\t%s | %s", now.Hour(), now.Second(), now.Second(), in.User, in.Message)
-		if err := stream.Send(message); err != nil {
+		in.Timestamp = time.Now().Unix()
+		if err := stream.Send(in); err != nil {
 			return err
 		}
 	}

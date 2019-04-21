@@ -3,14 +3,11 @@ syntax = "proto3";
 package chat;
 
 service Chat {
-    rpc SendMessage (stream UserMessage) returns (stream ServerMessage) {}
+    rpc SendMessage (stream ChatMessage) returns (stream ChatMessage) {}
 }
 
-message UserMessage {
+message ChatMessage {
     string User = 1;
     string Message = 2;
-}
-
-message ServerMessage {
-    string Message = 1;
+    int64 Timestamp = 3;
 }

@@ -24,110 +24,78 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type UserMessage struct {
+type ChatMessage struct {
 	User                 string   `protobuf:"bytes,1,opt,name=User,proto3" json:"User,omitempty"`
 	Message              string   `protobuf:"bytes,2,opt,name=Message,proto3" json:"Message,omitempty"`
+	Timestamp            int64    `protobuf:"varint,3,opt,name=Timestamp,proto3" json:"Timestamp,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *UserMessage) Reset()         { *m = UserMessage{} }
-func (m *UserMessage) String() string { return proto.CompactTextString(m) }
-func (*UserMessage) ProtoMessage()    {}
-func (*UserMessage) Descriptor() ([]byte, []int) {
+func (m *ChatMessage) Reset()         { *m = ChatMessage{} }
+func (m *ChatMessage) String() string { return proto.CompactTextString(m) }
+func (*ChatMessage) ProtoMessage()    {}
+func (*ChatMessage) Descriptor() ([]byte, []int) {
 	return fileDescriptor_8c585a45e2093e54, []int{0}
 }
 
-func (m *UserMessage) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_UserMessage.Unmarshal(m, b)
+func (m *ChatMessage) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ChatMessage.Unmarshal(m, b)
 }
-func (m *UserMessage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_UserMessage.Marshal(b, m, deterministic)
+func (m *ChatMessage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ChatMessage.Marshal(b, m, deterministic)
 }
-func (m *UserMessage) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UserMessage.Merge(m, src)
+func (m *ChatMessage) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ChatMessage.Merge(m, src)
 }
-func (m *UserMessage) XXX_Size() int {
-	return xxx_messageInfo_UserMessage.Size(m)
+func (m *ChatMessage) XXX_Size() int {
+	return xxx_messageInfo_ChatMessage.Size(m)
 }
-func (m *UserMessage) XXX_DiscardUnknown() {
-	xxx_messageInfo_UserMessage.DiscardUnknown(m)
+func (m *ChatMessage) XXX_DiscardUnknown() {
+	xxx_messageInfo_ChatMessage.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_UserMessage proto.InternalMessageInfo
+var xxx_messageInfo_ChatMessage proto.InternalMessageInfo
 
-func (m *UserMessage) GetUser() string {
+func (m *ChatMessage) GetUser() string {
 	if m != nil {
 		return m.User
 	}
 	return ""
 }
 
-func (m *UserMessage) GetMessage() string {
+func (m *ChatMessage) GetMessage() string {
 	if m != nil {
 		return m.Message
 	}
 	return ""
 }
 
-type ServerMessage struct {
-	Message              string   `protobuf:"bytes,1,opt,name=Message,proto3" json:"Message,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *ServerMessage) Reset()         { *m = ServerMessage{} }
-func (m *ServerMessage) String() string { return proto.CompactTextString(m) }
-func (*ServerMessage) ProtoMessage()    {}
-func (*ServerMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8c585a45e2093e54, []int{1}
-}
-
-func (m *ServerMessage) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ServerMessage.Unmarshal(m, b)
-}
-func (m *ServerMessage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ServerMessage.Marshal(b, m, deterministic)
-}
-func (m *ServerMessage) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ServerMessage.Merge(m, src)
-}
-func (m *ServerMessage) XXX_Size() int {
-	return xxx_messageInfo_ServerMessage.Size(m)
-}
-func (m *ServerMessage) XXX_DiscardUnknown() {
-	xxx_messageInfo_ServerMessage.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_ServerMessage proto.InternalMessageInfo
-
-func (m *ServerMessage) GetMessage() string {
+func (m *ChatMessage) GetTimestamp() int64 {
 	if m != nil {
-		return m.Message
+		return m.Timestamp
 	}
-	return ""
+	return 0
 }
 
 func init() {
-	proto.RegisterType((*UserMessage)(nil), "chat.UserMessage")
-	proto.RegisterType((*ServerMessage)(nil), "chat.ServerMessage")
+	proto.RegisterType((*ChatMessage)(nil), "chat.ChatMessage")
 }
 
 func init() { proto.RegisterFile("chat.proto", fileDescriptor_8c585a45e2093e54) }
 
 var fileDescriptor_8c585a45e2093e54 = []byte{
-	// 138 bytes of a gzipped FileDescriptorProto
+	// 142 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x4a, 0xce, 0x48, 0x2c,
-	0xd1, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x01, 0xb1, 0x95, 0xac, 0xb9, 0xb8, 0x43, 0x8b,
-	0x53, 0x8b, 0x7c, 0x53, 0x8b, 0x8b, 0x13, 0xd3, 0x53, 0x85, 0x84, 0xb8, 0x58, 0x40, 0x5c, 0x09,
-	0x46, 0x05, 0x46, 0x0d, 0xce, 0x20, 0x30, 0x5b, 0x48, 0x82, 0x8b, 0x1d, 0x2a, 0x2d, 0xc1, 0x04,
-	0x16, 0x86, 0x71, 0x95, 0x34, 0xb9, 0x78, 0x83, 0x53, 0x8b, 0xca, 0x10, 0xda, 0x91, 0x94, 0x32,
-	0xa2, 0x28, 0x35, 0x72, 0xe6, 0x62, 0x71, 0xce, 0x48, 0x2c, 0x11, 0xb2, 0xe6, 0xe2, 0x0e, 0x4e,
-	0xcd, 0x4b, 0x81, 0x69, 0x10, 0xd4, 0x03, 0xbb, 0x08, 0xc9, 0x09, 0x52, 0xc2, 0x10, 0x21, 0x14,
-	0x83, 0x95, 0x18, 0x34, 0x18, 0x0d, 0x18, 0x93, 0xd8, 0xc0, 0x2e, 0x37, 0x06, 0x04, 0x00, 0x00,
-	0xff, 0xff, 0x92, 0xc1, 0xc7, 0x79, 0xc7, 0x00, 0x00, 0x00,
+	0xd1, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x01, 0xb1, 0x95, 0x22, 0xb9, 0xb8, 0x9d, 0x33,
+	0x12, 0x4b, 0x7c, 0x53, 0x8b, 0x8b, 0x13, 0xd3, 0x53, 0x85, 0x84, 0xb8, 0x58, 0x42, 0x8b, 0x53,
+	0x8b, 0x24, 0x18, 0x15, 0x18, 0x35, 0x38, 0x83, 0xc0, 0x6c, 0x21, 0x09, 0x2e, 0x76, 0xa8, 0xb4,
+	0x04, 0x13, 0x58, 0x18, 0xc6, 0x15, 0x92, 0xe1, 0xe2, 0x0c, 0xc9, 0xcc, 0x4d, 0x2d, 0x2e, 0x49,
+	0xcc, 0x2d, 0x90, 0x60, 0x56, 0x60, 0xd4, 0x60, 0x0e, 0x42, 0x08, 0x18, 0x39, 0x72, 0xb1, 0x80,
+	0x8c, 0x16, 0xb2, 0xe4, 0xe2, 0x0e, 0x4e, 0xcd, 0x4b, 0x81, 0x69, 0x12, 0xd4, 0x03, 0x3b, 0x02,
+	0xc9, 0x56, 0x29, 0x4c, 0x21, 0x25, 0x06, 0x0d, 0x46, 0x03, 0xc6, 0x24, 0x36, 0xb0, 0x53, 0x8d,
+	0x01, 0x01, 0x00, 0x00, 0xff, 0xff, 0xfb, 0x31, 0x46, 0x27, 0xb8, 0x00, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -163,8 +131,8 @@ func (c *chatClient) SendMessage(ctx context.Context, opts ...grpc.CallOption) (
 }
 
 type Chat_SendMessageClient interface {
-	Send(*UserMessage) error
-	Recv() (*ServerMessage, error)
+	Send(*ChatMessage) error
+	Recv() (*ChatMessage, error)
 	grpc.ClientStream
 }
 
@@ -172,12 +140,12 @@ type chatSendMessageClient struct {
 	grpc.ClientStream
 }
 
-func (x *chatSendMessageClient) Send(m *UserMessage) error {
+func (x *chatSendMessageClient) Send(m *ChatMessage) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *chatSendMessageClient) Recv() (*ServerMessage, error) {
-	m := new(ServerMessage)
+func (x *chatSendMessageClient) Recv() (*ChatMessage, error) {
+	m := new(ChatMessage)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -206,8 +174,8 @@ func _Chat_SendMessage_Handler(srv interface{}, stream grpc.ServerStream) error 
 }
 
 type Chat_SendMessageServer interface {
-	Send(*ServerMessage) error
-	Recv() (*UserMessage, error)
+	Send(*ChatMessage) error
+	Recv() (*ChatMessage, error)
 	grpc.ServerStream
 }
 
@@ -215,12 +183,12 @@ type chatSendMessageServer struct {
 	grpc.ServerStream
 }
 
-func (x *chatSendMessageServer) Send(m *ServerMessage) error {
+func (x *chatSendMessageServer) Send(m *ChatMessage) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *chatSendMessageServer) Recv() (*UserMessage, error) {
-	m := new(UserMessage)
+func (x *chatSendMessageServer) Recv() (*ChatMessage, error) {
+	m := new(ChatMessage)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}

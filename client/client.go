@@ -5,6 +5,7 @@ import (
     "fmt"
     "io"
     "log"
+    "time"
 
     "google.golang.org/grpc"
     pb "simpleChat/chat"
@@ -44,7 +45,11 @@ func main() {
             if err != nil {
                 log.Fatalf("failed to receive a message: %v", err)
             }
-            fmt.Println(in.Message)
+            if in.User == user {
+                continue
+            }
+            ts := time.Unix(in.Timestamp, 0)
+            fmt.Printf("%d:%d:%d\t%s | %s\n", ts.Hour(), ts.Minute(), ts.Second(), in.User, in.Message)
         }
     }()
     for {
@@ -53,7 +58,7 @@ func main() {
         if message == "quit" {
             break
         }
-        userMsg := &pb.UserMessage{}
+        userMsg := &pb.ChatMessage{}
         userMsg.User = user
         userMsg.Message = message
         if err := stream.Send(userMsg); err != nil {
