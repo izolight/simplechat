@@ -15,19 +15,44 @@ const (
 	port = ":12345"
 )
 
-type chatServer struct{}
+type chatServer struct{
+	clientMessages []chan *pb.ChatMessage
+}
 
 func (c *chatServer) SendMessage(stream pb.Chat_SendMessageServer) error {
+	messages := make(chan *pb.ChatMessage)
+	c.clientMessages = append(c.clientMessages, messages)
+	errors := make(chan error)
+
+	// receive all messages and send to all servers
+	go func () {
+		for {
+			in, err := stream.Recv()
+			if err == io.EOF {
+				break
+			}
+			if err != nil {
+				errors <- err
+				break
+			}
+			in.Timestamp = time.Now().Unix()
+			go func() {
+				for _, mc := range c.clientMessages {
+					if mc != messages {
+						mc <- in
+					}
+				}
+			}()
+		}
+	}()
+
 	for {
-		in, err := stream.Recv()
-		if err == io.EOF {
-			return nil
-		}
-		if err != nil {
-			return err
-		}
-		in.Timestamp = time.Now().Unix()
-		if err := stream.Send(in); err != nil {
+		select {
+		case msg := <- messages:
+			if err := stream.Send(msg); err != nil {
+				return err
+			}
+		case err := <-errors:
 			return err
 		}
 	}
@@ -39,7 +64,7 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	s := grpc.NewServer()
-	pb.RegisterChatServer(s, &chatServer{})
+	pb.RegisterChatServer(s, &chatServer{make([]chan *pb.ChatMessage,0)})
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}

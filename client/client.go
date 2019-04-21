@@ -53,11 +53,13 @@ func main() {
             fmt.Printf("%d:%d:%d\t%s | %s\n", ts.Hour(), ts.Minute(), ts.Second(), in.User, in.Message)
         }
     }()
+    loop:
     for {
         var message string
         _, err = fmt.Scanln(&message)
         if message == "quit" {
-            break
+            close(waitc)
+            break loop
         }
         userMsg := &pb.ChatMessage{}
         userMsg.User = user
