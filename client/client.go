@@ -7,8 +7,9 @@ import (
     "log"
     "time"
 
-    "google.golang.org/grpc"
     pb "simpleChat/chat"
+
+    "google.golang.org/grpc"
 )
 
 const (

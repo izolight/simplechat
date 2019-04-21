@@ -4,10 +4,11 @@ import (
 	"io"
 	"log"
 	"net"
+	"time"
+
+	pb "simpleChat/chat"
 
 	"google.golang.org/grpc"
-	pb "simpleChat/chat"
-	"time"
 )
 
 const (
