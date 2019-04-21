@@ -28,6 +28,14 @@ func (c *chatServer)sendToAll(me chan *pb.ChatMessage, msg *pb.ChatMessage) {
 	}
 }
 
+func newServerMessage(message string) *pb.ChatMessage {
+	msg := &pb.ChatMessage{}
+	msg.User = "Server"
+	msg.Timestamp = time.Now().Unix()
+	msg.Message = message
+	return msg
+}
+
 func (c *chatServer) SendMessage(stream pb.Chat_SendMessageServer) error {
 	messages := make(chan *pb.ChatMessage)
 	c.clientMessages = append(c.clientMessages, messages)
@@ -39,10 +47,7 @@ func (c *chatServer) SendMessage(stream pb.Chat_SendMessageServer) error {
 		for {
 			in, err := stream.Recv()
 			if err == io.EOF {
-				msg := &pb.ChatMessage{}
-				msg.User = "Server"
-				msg.Timestamp = time.Now().Unix()
-				msg.Message = fmt.Sprintf("%s has left the server", user)
+				msg := newServerMessage(fmt.Sprintf("%s has left the server", user))
 				go c.sendToAll(messages, msg)
 				errors <- nil
 				break
@@ -52,10 +57,7 @@ func (c *chatServer) SendMessage(stream pb.Chat_SendMessageServer) error {
 				break
 			}
 			if newUser {
-				msg := &pb.ChatMessage{}
-				msg.User = "Server"
-				msg.Timestamp = time.Now().Unix()
-				msg.Message = fmt.Sprintf("%s joined the server", in.User)
+				msg := newServerMessage(fmt.Sprintf("%s joined the server", in.User))
 				go c.sendToAll(messages, msg)
 				user = in.User
 				newUser = false
