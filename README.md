@@ -18,6 +18,8 @@ simpleChat is a basic Chatserver and Client implementation in go and grpc
 - permissions
 - authentication
 - better input handling
+- private messages
+- encryption (e2e)
 
 ## How to use
 
